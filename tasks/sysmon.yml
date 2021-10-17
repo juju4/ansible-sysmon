@@ -26,6 +26,11 @@
   command: sysmon -accepteula -i
   args:
     creates: /etc/systemd/system/sysmon.service
+  when: >
+    ansible_service_mgr == 'systemd' and
+    not (ansible_virtualization_type is defined and
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        )
 
 - name: Configure sysmon
   template:
