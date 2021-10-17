@@ -75,3 +75,8 @@ jobs:
           sudo cat /opt/sysmon/config.xml || true
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - resulting systemd config
+        run: |
+          find /etc/systemd/system/sysmon.service.d/ -type f -exec cat {} \;
+        if: ${{ always() }}
+        continue-on-error: true
