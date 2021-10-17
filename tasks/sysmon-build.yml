@@ -1,0 +1,28 @@
+---
+
+- name: Ensure build dependencies are present
+  package:
+    name: "{{ sysmon_build_pkgs }}"
+    state: present
+
+- name: Git clone SysmonForLinux repo
+  git:
+    repo: https://github.com/Sysinternals/SysmonForLinux.git
+    dest: "{{ sysmon_build_dir }}"
+    version: "{{ sysmon_git_version }}"
+
+- name: Ensure build directory exists
+  file:
+    dest: "{{ sysmon_build_dir }}/build"
+    state: directory
+    mode: '0700'
+
+- name: Build sysmon packages
+  command: "{{ item.c }}"
+  args:
+    chdir: "{{ item.chdir }}"
+    creates: "{{ item.t }}"
+  with_items:
+    - { c: "cmake ..", chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/Makefile" }
+    - { c: make, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
+    - { c: make packages, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmonforlinux.deb" }

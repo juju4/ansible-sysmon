@@ -1,0 +1,37 @@
+---
+
+- name: Ensure dependencies are present
+  package:
+    name: "{{ sysmon_deps_pkgs }}"
+    state: present
+
+- name: Ensure sysmon package is installed - local build
+  apt:
+    deb: /path/to/deb
+  when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18
+
+- name: Ensure sysmon package is installed - microsoft repo
+  package:
+    name: sysmonforlinux
+    state: present
+  when: not (sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18)
+
+- name: Ensure /opt/sysmon exists
+  file:
+    path: /opt/sysmon
+    state: directory
+    mode: '0700'
+
+- name: Install sysmon service
+  command: sysmon -accepteula -i
+  args:
+    creates: /etc/systemd/system/sysmon.service
+
+- name: Configure sysmon
+  template:
+    src: "{{ sysmon_template }}"
+    dest: /opt/sysmon/config.xml
+    mode: '600'
+    backup: "{{ sysmon_backup | default('yes') }}"
+  notify:
+    - restart sysmon

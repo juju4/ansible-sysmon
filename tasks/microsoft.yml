@@ -1,0 +1,31 @@
+---
+
+- name: Debian | adding Microsoft packages signing key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Debian | adding Microsoft prod packages repository
+  apt_repository:
+    repo: "deb [arch=amd64] http://packages.microsoft.com/ubuntu/{{ ansible_distribution_version }}/prod {{ ansible_distribution_release }} main"
+    filename: microsoft.list
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: RedHat | adding Microsoft packages signing key
+  ansible.builtin.rpm_key:
+    key: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: RedHat | adding Microsoft prod packages repository
+  package:
+    name: "https://packages.microsoft.com/config/rhel/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure Microsoft packages are present
+  package:
+    name: dotnet-runtime-3.1
+    state: present

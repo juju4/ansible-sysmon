@@ -1,0 +1,28 @@
+---
+
+- name: adding Xamarin Mono signing key
+  apt_key:
+    url: https://download.mono-project.com/repo/xamarin.gpg
+    state: present
+
+- name: adding Mono project repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.mono-project.com/repo/ubuntu stable-{{ ansible_distribution_release }} main"
+    filename: mono-official-stable.list
+    state: present
+  when: ansible_distribution_release != 'hirsute'
+
+- name: Ubuntu 21.04 | adding Mono project repository
+  apt_repository:
+    # repo: "deb [arch=amd64] https://download.mono-project.com/repo/ubuntu stable-focal main"
+    repo: "deb https://download.mono-project.com/repo/ubuntu vs-focal main"
+    filename: mono-official-stable.list
+    state: present
+  when: ansible_distribution_release == 'hirsute'
+
+- name: Ensure mono-devel package is present
+  package:
+    name: mono-devel
+    state: present
+  register: pkg_result
+  until: pkg_result is success

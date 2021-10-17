@@ -1,0 +1,25 @@
+---
+
+sysmon_deps_pkgs: [ 'apt-transport-https' ]
+sysmon_build_pkgs:
+  - build-essential
+  - gcc
+  - g++
+  - make
+  - cmake
+  - libelf-dev
+  - llvm
+  - clang
+  - libxml2
+  - libxml2-dev
+  - libzstd1
+  - git
+  - libgtest-dev
+  - apt-transport-https
+  - dirmngr
+  - monodevelop
+  - googletest
+  - google-mock
+  - libjson-glib-dev
+
+syslog_user: syslog

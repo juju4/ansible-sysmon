@@ -1,0 +1,24 @@
+---
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+  when: >
+    ansible_service_mgr == 'systemd' and
+    not (ansible_virtualization_type is defined and
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        )
+
+- name: restart rsyslog
+  service: name=rsyslog state=restarted
+  when: >
+    not (ansible_virtualization_type is defined and
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        )
+
+- name: restart sysmon
+  service: name=sysmon state=restarted
+  when: >
+    not (ansible_virtualization_type is defined and
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
+        )

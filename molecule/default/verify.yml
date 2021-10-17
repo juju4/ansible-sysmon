@@ -1,0 +1,18 @@
+---
+
+- name: Verify
+  hosts: sysmon
+  tasks:
+
+    - name: Get /opt/sysmon/config.xml stats
+      stat:
+        path: /opt/sysmon/config.xml
+      register: sysmonp
+    - name: Validate /opt/sysmon/config.xml exists
+      assert:
+        that: sysmonp.stat.exists and sysmonp.stat.size != 0
+
+    - name: Print sysmon configuration schema definition
+      command: sysmon -s
+      register: grub
+      changed_when: false

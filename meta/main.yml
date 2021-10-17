@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: sysmon
+  author: juju4
+  description: Install Sysmon for Linux
+  license: BSD
+  min_ansible_version: 2.12
+  platforms:
+    - name: EL
+      versions:
+        - 8
+        - 7
+    - name: Ubuntu
+      versions:
+        - focal
+        - bionic
+  galaxy_tags:
+    - system
+    - kernel
+    - security
+dependencies: []

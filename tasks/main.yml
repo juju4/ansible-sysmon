@@ -1,0 +1,21 @@
+---
+
+- name: Include os family-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+- name: Include distribution-specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == 'Ubuntu'
+
+- import_tasks: mono.yml
+  when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18
+- import_tasks: sysmon-build.yml
+  when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18
+- import_tasks: microsoft.yml
+  when: not (sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18)
+
+- import_tasks: sysmon.yml
+- import_tasks: rsyslog.yml
+- import_tasks: logrotate.yml
+- import_tasks: systemd.yml
+  when: sysmon_systemd_restriction_enable
+- import_tasks: reporting.yml

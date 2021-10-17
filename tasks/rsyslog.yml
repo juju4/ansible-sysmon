@@ -1,0 +1,55 @@
+---
+
+- name: Ensure rsyslog is present
+  package:
+    name: rsyslog
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
+- name: Gather package facts
+  package_facts:
+    manager: auto
+
+- name: get rsyslog version
+  set_fact:
+    rsyslog_v: "{{ ansible_facts.packages['rsyslog'][0]['version'] }}"
+
+- name: Debug | rsyslog version
+  debug: var=rsyslog_v verbosity=1
+
+- name: Ensure base directory exists
+  file:
+    dest: "{{ sysmon_syslog_target | dirname }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ syslog_user }}"
+    group: root
+  when: >
+    "'/var/log/' in sysmon_syslog_target" and
+    sysmon_syslog_target|dirname != '/var/log'
+
+- name: Check if sysmon syslog file exists
+  stat:
+    path: "{{ sysmon_syslog_target }}"
+  register: sysmonlog
+
+- name: Ensure log file have right permissions
+  file:
+    dest: "{{ sysmon_syslog_target }}"
+    state: touch
+    mode: '0640'
+    owner: "{{ syslog_user }}"
+    group: root
+  when:
+    - "'/var/log/' in sysmon_syslog_target"
+    - not sysmonlog.stat.exists
+
+- name: setup rsyslog to send sysmon logs to a specific target
+  template:
+    src: rsyslog-sysmon.conf.j2
+    dest: /etc/rsyslog.d/30-sysmon.conf
+    mode: '0644'
+    backup: yes
+  notify:
+    - restart rsyslog

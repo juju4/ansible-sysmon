@@ -1,0 +1,11 @@
+{{ ansible_managed | comment }}
+## /etc/logrotate.d/sysmon
+{{ sysmon_syslog_target }} {
+    rotate {{ sysmon_logrotate_days|int }}
+    daily
+    missingok
+    delaycompress
+    compress
+    create 640 {{ syslog_user }} adm
+    sharedscripts
+}

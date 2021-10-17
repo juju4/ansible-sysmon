@@ -1,0 +1,11 @@
+---
+
+- name: Install report tools
+  package:
+    name: "{{ sysmon_report_pkgs }}"
+    state: present
+
+# head -1 /var/log/sysmon/sysmon.log | sed 's/^.* sysmon: //' | xmllint --format -
+# head -1 /var/log/sysmon/sysmon.log | sed 's/^.* sysmon: //' | xmllint --xpath "concat(/Event/EventData/Data[@Name='CommandLine']/text(), '|', /Event/EventData/Data[@Name='ParentCommandLine']/text())" -
+
+# cat /var/log/sysmon/sysmon.log | /opt/sysmon/sysmonLogView -r 1
