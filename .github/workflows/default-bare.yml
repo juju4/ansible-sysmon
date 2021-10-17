@@ -72,6 +72,6 @@ jobs:
       - name: After script - sysmon
         run: |
           sysmon -s || true
-          cat /opt/sysmon/config.xml || true
+          sudo cat /opt/sysmon/config.xml || true
         if: ${{ always() }}
         continue-on-error: true
