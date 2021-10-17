@@ -1,5 +1,10 @@
 ---
 
+- name: Ensure dependencies are present
+  package:
+    name: gpg
+    state: present
+
 - name: Debian | adding Microsoft packages signing key
   apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
