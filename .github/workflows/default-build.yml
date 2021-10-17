@@ -42,7 +42,7 @@ jobs:
           find -ls
       - name: run test
         run: |
-          cd $GITHUB_WORKSPACE/juju4.sysmon && molecule test -t default-build
+          cd $GITHUB_WORKSPACE/juju4.sysmon && molecule test --scenario-name default-build
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
