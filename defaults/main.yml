@@ -10,7 +10,7 @@ sysmon_syslog_target: /var/log/sysmon/sysmon.log
 sysmon_logrotate_days: 90
 
 sysmon_systemd_restriction_enable: true
-sysmon_cgroups_restriction_enable: false
+sysmon_cgroups_restriction_enable: true
 sysmon_cgroups_cpuquota: '20%'
 sysmon_cgroups_memorylimit: '1G'
 sysmon_cgroups_cpushares: '1024'
