@@ -1,6 +1,8 @@
 ---
 
-sysmon_deps_pkgs: [ 'apt-transport-https' ]
+sysmon_deps_pkgs:
+  - apt-transport-https
+  - libxml2-utils
 sysmon_build_pkgs:
   - build-essential
   - gcc

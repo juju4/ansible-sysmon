@@ -37,6 +37,7 @@
     src: "{{ sysmon_template }}"
     dest: /opt/sysmon/config.xml
     mode: '600'
+    validate: 'xmllint --noout %s'
     backup: "{{ sysmon_backup | default('yes') }}"
   notify:
     - restart sysmon
