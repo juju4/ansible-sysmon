@@ -21,7 +21,7 @@
     creates: "{{ item.t }}"
   with_items:
     - { c: "cmake ..", chdir: "/usr/src/googletest/build", t: "/usr/src/googletest/build/Makefile", b: yes, bu: nobody }
-    - { c: make, chdir: "/usr/src/googletest/build", t: "/usr/src/googletest/build/lib/libgtest.a", b: yes, bu: nobody }
+    - { c: make, chdir: "/usr/src/googletest/build", t: "{{ sysmon_libgtest_path }}", b: yes, bu: nobody }
     - { c: make install, chdir: "/usr/src/googletest/build", t: "/usr/local/lib/libgtest.a", b: yes, bu: root }
 
 - name: Git clone SysmonForLinux repo

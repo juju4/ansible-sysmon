@@ -1,0 +1,3 @@
+---
+
+sysmon_libgtest_path: /usr/src/googletest/build/googlemock/gtest/libgtest.a
