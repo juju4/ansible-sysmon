@@ -23,6 +23,7 @@ sysmon_build_pkgs:
   - googletest
   - google-mock
   - libjson-glib-dev
+  - sysinternalsebpf
 
 syslog_user: root
 

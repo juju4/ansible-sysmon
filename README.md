@@ -43,7 +43,7 @@ $ MOLECULE_DISTRO=ubuntu:20.04 molecule test --destroy=never
 
 ## Troubleshooting & Known issues
 
-* build option requires [monodevelop](https://www.monodevelop.com/download/) which is only available up to Ubuntu 18.04 at Oct 2021.
+* build option requires [monodevelop](https://www.monodevelop.com/download/) which is only available officially up to Ubuntu 18.04 at Oct 2021 but as said in download page, bionic repository is functional on more recent releases.
 
 ## License
 

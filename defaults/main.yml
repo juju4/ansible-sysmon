@@ -2,6 +2,7 @@
 
 sysmon_build: false
 sysmon_build_dir: /var/_install/sysmon
+sysmon_build_version: 1.0.0
 sysmon_git_version: 9bca3734721a01cb2ac6e2e3adc40ecdcad3151e
 
 sysmon_template: config.xml.j2

@@ -1,5 +1,10 @@
 ---
 
+- name: Ensure gpg is present
+  package:
+    name: gpg
+    state: present
+
 - name: adding Xamarin Mono signing key
   apt_key:
     url: https://download.mono-project.com/repo/xamarin.gpg
@@ -12,13 +17,13 @@
     state: present
   when: ansible_distribution_release != 'hirsute'
 
-- name: Ubuntu 21.04 | adding Mono project repository
+- name: Ubuntu 20.04+ | adding Mono project repository
   apt_repository:
     # repo: "deb [arch=amd64] https://download.mono-project.com/repo/ubuntu stable-focal main"
-    repo: "deb https://download.mono-project.com/repo/ubuntu vs-focal main"
+    repo: "deb https://download.mono-project.com/repo/ubuntu vs-bionic main"
     filename: mono-official-stable.list
     state: present
-  when: ansible_distribution_release == 'hirsute'
+  when: ansible_distribution_major_version|int >= 20
 
 - name: Ensure mono-devel package is present
   package:

@@ -7,7 +7,7 @@
 
 - name: Ensure sysmon package is installed - local build
   apt:
-    deb: /path/to/deb
+    deb: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}-1_amd64.deb"
   when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18
 
 - name: Ensure sysmon package is installed - microsoft repo

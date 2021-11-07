@@ -21,8 +21,8 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      verbosity: 2
+      verbosity: 3
 scenario:
-  name: default
+  name: default-build
 verifier:
   name: ansible

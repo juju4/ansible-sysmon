@@ -7,11 +7,10 @@
   when: ansible_distribution == 'Ubuntu'
 
 - import_tasks: mono.yml
-  when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18
-- import_tasks: sysmon-build.yml
-  when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18
+  when: sysmon_build and ansible_distribution == 'Ubuntu'
 - import_tasks: microsoft.yml
-  when: not (sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 18)
+- import_tasks: sysmon-build.yml
+  when: sysmon_build and ansible_distribution == 'Ubuntu'
 
 - import_tasks: sysmon.yml
 - import_tasks: rsyslog.yml
