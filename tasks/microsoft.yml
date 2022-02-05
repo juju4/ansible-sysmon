@@ -23,6 +23,8 @@
     key: https://packages.microsoft.com/keys/microsoft.asc
     state: present
   when: ansible_os_family == 'RedHat'
+  register: dl_result
+  until: dl_result is success
 
 - name: RedHat | adding Microsoft prod packages repository
   package:
