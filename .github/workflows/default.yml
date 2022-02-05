@@ -17,7 +17,8 @@ jobs:
       matrix:
         python-version: [3.8]
         molecule_distro:
-          - 'centos:8'
+          - 'redhat/ubi8'
+          - 'rockylinux:8'
           - 'ubuntu:20.04'
           - 'ubuntu:18.04'
     env:
