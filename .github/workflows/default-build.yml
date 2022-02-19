@@ -22,7 +22,7 @@ jobs:
           - molecule_distro: 'ubuntu:18.04'
             experimental: false
     env:
-      ANSIBLE_CALLBACK_ENABLED: profile_tasks
+      ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       MOLECULE_NO_LOG: "false"
 
     steps:
