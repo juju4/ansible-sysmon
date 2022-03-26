@@ -5,14 +5,14 @@
   tasks:
 
     - name: Get /opt/sysmon/config.xml stats
-      stat:
+      ansible.builtin.stat:
         path: /opt/sysmon/config.xml
       register: sysmonp
     - name: Validate /opt/sysmon/config.xml exists
-      assert:
+      ansible.builtin.assert:
         that: sysmonp.stat.exists and sysmonp.stat.size != 0
 
     - name: Print sysmon configuration schema definition
-      command: sysmon -s
+      ansible.builtin.command: sysmon -s
       register: grub
       changed_when: false

@@ -1,19 +1,19 @@
 ---
 
 - name: Ensure build dependencies are present
-  package:
+  ansible.builtin.package:
     name: "{{ sysmon_build_pkgs }}"
     state: present
 
 - name: Ensure google test build directory exists
-  file:
+  ansible.builtin.file:
     dest: "/usr/src/googletest/build"
     state: directory
     mode: '0700'
     owner: nobody
 
 - name: Build googletest dependency
-  command: "{{ item.c }}"
+  ansible.builtin.command: "{{ item.c }}"
   become: "{{ item.b }}"
   become_user: "{{ item.bu }}"
   args:
@@ -25,20 +25,20 @@
     - { c: make install, chdir: "/usr/src/googletest/build", t: "/usr/local/lib/libgtest.a", b: yes, bu: root }
 
 - name: Git clone SysmonForLinux repo
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Sysinternals/SysmonForLinux.git
     dest: "{{ sysmon_build_dir }}"
     version: "{{ sysmon_git_version }}"
 
 - name: Ensure build directory exists
-  file:
+  ansible.builtin.file:
     dest: "{{ sysmon_build_dir }}/build"
     state: directory
     mode: '0700'
     owner: nobody
 
 - name: Build sysmon packages - cmake
-  command: "{{ item.c }}"
+  ansible.builtin.command: "{{ item.c }}"
   become: yes
   become_user: nobody
   args:
@@ -48,7 +48,7 @@
     - { c: "cmake ..", chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/Makefile" }
 
 - name: Workaround | explicit call to mono
-  replace:  # noqa no-tabs
+  ansible.builtin.replace:  # noqa no-tabs
     dest: "{{ sysmon_build_dir }}/build/{{ item }}"
     regexp: "^\t/usr/lib/monodevelop/AddIns/MonoDevelop.TextTemplating/TextTransform.exe"
     replace: "\tmono /usr/lib/monodevelop/AddIns/MonoDevelop.TextTemplating/TextTransform.exe"
@@ -58,7 +58,7 @@
     - CMakeFiles/sysmonUnitTests.dir/build.make
 
 - name: Build sysmon packages
-  command: "{{ item.c }}"
+  ansible.builtin.command: "{{ item.c }}"
   become: yes
   become_user: nobody
   args:
