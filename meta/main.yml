@@ -4,12 +4,11 @@ galaxy_info:
   author: juju4
   description: Install Sysmon for Linux
   license: BSD
-  min_ansible_version: 2.12
+  min_ansible_version: '2.12'
   platforms:
     - name: EL
       versions:
-        - 8
-        - 7
+        - all
     - name: Ubuntu
       versions:
         - focal
