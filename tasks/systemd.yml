@@ -14,5 +14,5 @@
     mode: '0644'
     backup: "{{ sysmon_backup | default(true) }}"
   notify:
-    - reload systemd
-    - restart sysmon
+    - Reload systemd
+    - Restart sysmon
