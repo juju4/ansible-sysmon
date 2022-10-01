@@ -8,6 +8,8 @@
     no_proxy: "{{ lookup('env', 'no_proxy') }}"
   remote_user: root
   pre_tasks:
+    - name: Debug | ansible_virtualization_type
+      ansible.builtin.debug: var=ansible_virtualization_type
     - name: Ubuntu | Install python3
       ansible.builtin.raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3-minimal)
       register: python3
