@@ -9,15 +9,23 @@
   ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
   when: ansible_distribution == 'Ubuntu'
 
-- import_tasks: mono.yml
+- name: Import mono
+  ansible.builtin.import_tasks: mono.yml
   when: sysmon_build and ansible_distribution == 'Ubuntu'
-- import_tasks: microsoft.yml
-- import_tasks: sysmon-build.yml
+- name: Import microsoft
+  ansible.builtin.import_tasks: microsoft.yml
+- name: Import sysmon-build
+  ansible.builtin.import_tasks: sysmon-build.yml
   when: sysmon_build and ansible_distribution == 'Ubuntu'
 
-- import_tasks: sysmon.yml
-- import_tasks: rsyslog.yml
-- import_tasks: logrotate.yml
-- import_tasks: systemd.yml
+- name: Import sysmon
+  ansible.builtin.import_tasks: sysmon.yml
+- name: Import rsyslog
+  ansible.builtin.import_tasks: rsyslog.yml
+- name: Import logrotate
+  ansible.builtin.import_tasks: logrotate.yml
+- name: Import systemd
+  ansible.builtin.import_tasks: systemd.yml
   when: sysmon_systemd_restriction_enable
-- import_tasks: reporting.yml
+- name: Import reporting
+  ansible.builtin.import_tasks: reporting.yml
