@@ -15,3 +15,5 @@ sysmon_cgroups_restriction_enable: true
 sysmon_cgroups_cpuquota: '20%'
 sysmon_cgroups_memorylimit: '1G'
 sysmon_cgroups_cpushares: '1024'
+
+is_container: false
