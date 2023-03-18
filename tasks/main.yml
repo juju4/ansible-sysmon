@@ -20,12 +20,6 @@
       )
     )
 
-- name: Import mono
-  ansible.builtin.import_tasks: mono.yml
-  when:
-    - sysmon_build
-    - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_major_version | int < 22
 - name: Import microsoft
   ansible.builtin.import_tasks: microsoft.yml
 - name: Import sysmon-build
