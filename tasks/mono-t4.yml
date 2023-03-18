@@ -1,10 +1,7 @@
 ---
 
 - name: Install dotnet-t4 with dotnet tool
-  ansible.builtin.command:  # noqa no-changed-when
-    cmd: dotnet tool install -g dotnet-t4
-
-- name: Check install
   ansible.builtin.command:
-    cmd: ls -l /root/.dotnet/tools/ /home/*/.dotnet/tools/
-  changed_when: false
+    cmd: dotnet tool install -g dotnet-t4
+  args:
+    creates: /root/.dotnet/tools/t4
