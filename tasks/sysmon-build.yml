@@ -68,5 +68,7 @@
     chdir: "{{ item.chdir }}"
     creates: "{{ item.t }}"
   with_items:
+    - { c: whoami, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
+    - { c: env, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
     - { c: make, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
     - { c: make packages, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}-1_amd64.deb" }
