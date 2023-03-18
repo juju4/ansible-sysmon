@@ -28,6 +28,8 @@
     - ansible_distribution_major_version | int < 22
 - name: Import microsoft
   ansible.builtin.import_tasks: microsoft.yml
+  when:
+    - not (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 22)
 - name: Import sysmon-build
   ansible.builtin.import_tasks: sysmon-build.yml
   when: sysmon_build and ansible_distribution == 'Ubuntu'
