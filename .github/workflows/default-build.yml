@@ -23,7 +23,7 @@ jobs:
           - molecule_distro: 'rockylinux:9'
             experimental: true
           - molecule_distro: 'rockylinux:8'
-            experimental: true
+            experimental: false
           - molecule_distro: 'ubuntu:22.04'
             experimental: true
           - molecule_distro: 'ubuntu:20.04'
