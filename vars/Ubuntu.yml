@@ -19,7 +19,7 @@ sysmon_build_pkgs:
   - libgtest-dev
   - apt-transport-https
   - dirmngr
-  - monodevelop
+  # - monodevelop
   - googletest
   - google-mock
   - libjson-glib-dev
