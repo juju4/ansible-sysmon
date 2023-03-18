@@ -25,5 +25,6 @@ sysmon_build_pkgs:
   - libjson-glib-dev
   - sysinternalsebpf
   - dotnet-sdk-6.0
+  - libc6-dev-i386
 
 syslog_user: syslog
