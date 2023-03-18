@@ -62,8 +62,8 @@
 
 - name: Build sysmon packages
   ansible.builtin.command: "{{ item.c }}"
-  become: yes
-  become_user: nobody
+  # become: yes
+  # become_user: nobody
   args:
     chdir: "{{ item.chdir }}"
     creates: "{{ item.t }}"
