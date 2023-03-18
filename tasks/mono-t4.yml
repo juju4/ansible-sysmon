@@ -1,0 +1,5 @@
+---
+
+- name: Install dotnet-t4 with dotnet tool
+  ansible.builtin.command:
+    cmd: dotnet tool install -g dotnet-t4
