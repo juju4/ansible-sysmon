@@ -24,6 +24,7 @@ sysmon_build_pkgs:
   - google-mock
   - libjson-glib-dev
   - sysinternalsebpf
+  - dotnet-sdk-6.0
 
 syslog_user: root
 

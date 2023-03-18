@@ -36,5 +36,5 @@
 
 - name: Ensure Microsoft packages are present
   ansible.builtin.package:
-    name: dotnet-runtime-3.1
+    name: dotnet-runtime-6.0
     state: present
