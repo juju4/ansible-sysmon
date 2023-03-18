@@ -2,7 +2,9 @@
 
 sysmon_build: false
 sysmon_build_dir: /var/_install/sysmon
-sysmon_build_version: 1.1.0.0
+# Upstream bug
+# sysmon_build_version: 1.1.0.0-1
+sysmon_build_version: 0.0.0-0
 sysmon_git_version: edc74fc41301d78ad9c9bedcc73f384cff2f7900
 
 sysmon_template: config.xml.j2
