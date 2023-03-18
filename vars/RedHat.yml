@@ -1,7 +1,22 @@
 ---
 
 sysmon_deps_pkgs: []
-sysmon_build_pkgs: []
+sysmon_build_pkgs:
+  - gcc
+  - gcc-c++
+  - make
+  - cmake
+  - llvm
+  - clang
+  - elfutils-libelf-devel
+  - rpm-build
+  - json-glib-devel
+  - python3
+  - libxml2-devel
+  - gtest-devel
+  - gmock
+  - gmock-devel
+  - glibc-devel.i686
 
 syslog_user: root
 
