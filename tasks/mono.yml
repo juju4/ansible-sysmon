@@ -31,6 +31,3 @@
     state: present
   register: pkg_result
   until: pkg_result is success
-
-- name: Import mono-t4
-  ansible.builtin.import_tasks: mono-t4.yml

@@ -5,6 +5,9 @@
     name: "{{ sysmon_build_pkgs }}"
     state: present
 
+- name: Import mono-t4
+  ansible.builtin.import_tasks: mono-t4.yml
+
 - name: Ensure google test build directory exists
   ansible.builtin.file:
     dest: "/usr/src/googletest/build"
