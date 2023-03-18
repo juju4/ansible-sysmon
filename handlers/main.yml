@@ -19,3 +19,8 @@
     state: restarted
   when:
     - not is_container|bool
+
+- name: Refresh apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600

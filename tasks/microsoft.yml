@@ -5,20 +5,35 @@
     name: gpg
     state: present
 
-- name: Debian | adding Microsoft packages signing key
-  ansible.builtin.apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-  # https://github.com/ansible/ansible/issues/31691
-  environment: "{{ sysmon_env_proxy | default(omit) }}"
+- name: Debian
   when: ansible_os_family == 'Debian'
+  block:
+    - name: Debian | adding Microsoft packages signing key
+      ansible.builtin.apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+      # https://github.com/ansible/ansible/issues/31691
+      environment: "{{ sysmon_env_proxy | default(omit) }}"
 
-- name: Debian | adding Microsoft prod packages repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] http://packages.microsoft.com/ubuntu/{{ ansible_distribution_version }}/prod {{ ansible_distribution_release }} main"
-    filename: microsoft.list
-    state: present
-  when: ansible_os_family == 'Debian'
+    - name: Debian | adding Microsoft prod packages repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64] http://packages.microsoft.com/ubuntu/{{ ansible_distribution_version }}/prod {{ ansible_distribution_release }} main"
+        filename: microsoft.list
+        state: present
+      notify:
+        - Refresh apt cache
+
+    - name: Debian | adding apt preferences for Microsoft prod packages
+      ansible.builtin.file:
+        content: |
+          Package: *
+          Pin: origin "packages.microsoft.com"
+          Pin-Priority: 1001
+        dest: /etc/apt/preferences.d/99microsoft-dotnet.pref
+        mode: 0644
+
+    - name: Flush handlers
+      ansible.builtin.meta: flush_handlers
 
 - name: RedHat | adding Microsoft packages signing key
   ansible.builtin.rpm_key:
