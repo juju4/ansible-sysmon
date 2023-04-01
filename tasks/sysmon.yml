@@ -26,6 +26,8 @@
   ansible.builtin.command: sysmon -accepteula -i
   args:
     creates: /etc/systemd/system/sysmon.service
+  notify:
+    - Reload systemd
   when:
     - ansible_service_mgr == 'systemd'
     - not is_container|bool
@@ -39,3 +41,14 @@
     backup: "{{ sysmon_backup | default('yes') }}"
   notify:
     - Restart sysmon
+
+- name: Ensure sysmon service is setup
+  block:
+    - name: Flush handlers
+      ansible.builtin.meta: flush_handlers
+  rescue:
+    - name: Rerun sysmon init  # noqa no-changed-when
+      ansible.builtin.command: sysmon -accepteula -i
+      notify:
+        - Reload systemd
+        - Restart sysmon
