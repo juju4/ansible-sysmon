@@ -3,8 +3,15 @@
 {{ sysmon_syslog_target }} {
     rotate {{ sysmon_logrotate_days|int }}
     daily
+{% if syslogclient_logrotate_datext is defined and syslogclient_logrotate_datext|string %}
+    dateext
+    dateformat {{ syslogclient_logrotate_datformat }}
+{% endif%}
     missingok
+{% if syslogclient_logrotate_compress is defined and syslogclient_logrotate_compress|bool %}
+    compress
     delaycompress
+{% endif %}
     compress
     create 640 {{ syslog_user }} adm
     sharedscripts
