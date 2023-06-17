@@ -20,7 +20,7 @@ NG FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 <Sysmon schemaversion="4.81">
   <EventFiltering>
     <!-- Event ID 1 == ProcessCreate. Log all newly created processes except-->
-    <RuleGroup name="" groupRelation="or">
+    <RuleGroup name="ProcessCreate" groupRelation="or">
       <ProcessCreate onmatch="exclude">
         <CurrentDirectory condition="begin with">/var/lib/waagent/</CurrentDirectory>
         <Image condition="is">/opt/microsoft/auoms/bin/auomsctl</Image>
@@ -35,7 +35,7 @@ NG FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
       </ProcessCreate>
     </RuleGroup>
     <!-- Event ID 3 == NetworkConnect Detected. Log all network connections except -->
-    <RuleGroup name="" groupRelation="or">
+    <RuleGroup name="NetworkConnect" groupRelation="or">
       <NetworkConnect onmatch="exclude">
         <Rule name="" groupRelation="or">
           <Image condition="is">/opt/microsoft/omsagent/ruby/bin/ruby</Image>
@@ -53,15 +53,19 @@ NG FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
       </NetworkConnect>
     </RuleGroup>
     <!-- Event ID 5 == ProcessTerminate. Log all processes terminated except -->
-    <RuleGroup name="" groupRelation="or">
+    <RuleGroup name="ProcessTerminate" groupRelation="or">
       <ProcessTerminate onmatch="exclude">
         <Image condition="is">/sbin/xtables-multi</Image>
         <Image condition="is">/usr/bin/clear</Image>
         <Image condition="is">/lib/systemd/systemd-journald</Image>
       </ProcessTerminate>
     </RuleGroup>
+    <!-- Event ID 9 == RawAccessRead. Log all raw access read -->
+    <RuleGroup name="RawAccessRead" groupRelation="or">
+      <RawAccessRead onmatch="exclude"/>
+    </RuleGroup>
     <!-- Event ID 11 == FileCreate. Log every file creation except -->
-    <RuleGroup name="" groupRelation="or">
+    <RuleGroup name="FileCreate" groupRelation="or">
       <FileCreate onmatch="exclude">
         <Image condition="is">/opt/microsoft/omsagent/ruby/bin/ruby</Image>
         <TargetFilename condition="begin with">/var/lib/waagent/</TargetFilename>
@@ -82,7 +86,7 @@ NG FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
       </FileCreate>
     </RuleGroup>
     <!--Event ID 23 == FileDelete. Log all files being deleted except-->
-    <RuleGroup name="" groupRelation="or">
+    <RuleGroup name="FileDelete" groupRelation="or">
       <FileDelete onmatch="exclude">
         <Rule name="OMSRuby" groupRelation="and">
           <Image condition="is">/opt/microsoft/omsagent/ruby/bin/ruby</Image>
