@@ -26,7 +26,7 @@ jobs:
             experimental: true
           - distribution: ubuntu
             version: '20.04'
-            experimental: false
+            experimental: true
     env:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
 
