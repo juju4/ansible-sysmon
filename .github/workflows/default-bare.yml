@@ -81,14 +81,27 @@ jobs:
           systemctl status sysmon || true
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - journalctl
+        run: |
+          journalctl -xe -u sysmon
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: After script - files
+        run: |
+          ls -lA /opt/sysmon/
+        if: ${{ always() }}
+        continue-on-error: true
       - name: After script - sysmon
         run: |
+          set -x
           sysmon -s || true
           sudo cat /opt/sysmon/config.xml || true
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - resulting systemd config
         run: |
+          set -x
+          cat /etc/systemd/system/sysmon.service || true
           find /etc/systemd/system/sysmon.service.d/ -type f -exec cat {} \;
         if: ${{ always() }}
         continue-on-error: true
