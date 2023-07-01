@@ -14,6 +14,33 @@
         state: present
       # https://github.com/ansible/ansible/issues/31691
       environment: "{{ sysmon_env_proxy | default(omit) }}"
+      when:
+        - ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int <= 18
+
+    - name: Setup Microsoft APT key
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        dest: /etc/apt/trusted.gpg.d/microsoft.asc
+        mode: '0644'
+      register: dl_result
+      until: dl_result is success
+      when:
+        - proxy_url is not defined or not proxy_url | string
+        - ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int > 18
+
+    - name: Proxy
+      when:
+        - proxy_url is defined and proxy_url | string
+        - ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int > 18
+      block:
+        # workaround for apt_key not supporting proxy (ansible#31691)
+        - name: Download Microsoft Apt signing key  # noqa command-instead-of-module
+          ansible.builtin.command:
+            cmd: curl -sL -o /etc/apt/trusted.gpg.d/microsoft.asc https://packages.microsoft.com/keys/microsoft.asc
+          args:
+            creates: /etc/apt/trusted.gpg.d/microsoft.asc
+          environment:
+            http_proxy: "{{ proxy_url | default(omit) }}"
 
     - name: Debian | adding Microsoft prod packages repository
       ansible.builtin.apt_repository:
