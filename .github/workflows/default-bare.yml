@@ -31,7 +31,7 @@ jobs:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: juju4.sysmon
       - name: Set up Python
