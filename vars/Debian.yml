@@ -29,3 +29,4 @@ syslog_user: root
 
 sysmon_report_pkgs:
   - libxml2-utils
+  - cron
