@@ -11,6 +11,11 @@
     state: directory
     mode: '0755'
 
+- name: Ensure /opt/sysmon has traversal permission
+  ansible.builtin.file:
+    dest: /opt/sysmon
+    mode: '0711'
+
 - name: Ensure sysmonLogView can be used by non-root users
   ansible.builtin.file:
     dest: /opt/sysmon/sysmonLogView

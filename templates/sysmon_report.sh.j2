@@ -17,7 +17,8 @@ check_tee_output()
 check_tee_output
 
 date=$(date +%Y%m%d)
-journalctl_args="--since '1 day ago' -l --no-pager"
+# journalctl_args="--since '1 day ago' -l --no-pager"
+journalctl_args="-l --no-pager"
 f=/var/log/sysmon/sysmon.log
 echo
 echo
