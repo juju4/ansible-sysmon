@@ -88,7 +88,9 @@ jobs:
         continue-on-error: true
       - name: After script - files
         run: |
-          sudo ls -lA /opt/sysmon/
+          sudo ls -la /opt/sysmon/
+          sudo getfacl /opt/sysmon/sysmon
+          sudo getfacl /opt/sysmon/sysmonLogView
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - sysmon
@@ -108,6 +110,6 @@ jobs:
       - name: After script - reporting
         run: |
           set -x
-          TEE=false /usr/local/scripts/sysmon_report.sh
+          TEE=false sh -x /usr/local/scripts/sysmon_report.sh
         if: ${{ always() }}
         continue-on-error: true

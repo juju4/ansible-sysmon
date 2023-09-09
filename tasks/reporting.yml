@@ -11,6 +11,11 @@
     state: directory
     mode: '0755'
 
+- name: Ensure sysmonLogView can be used by non-root users
+  ansible.builtin.file:
+    dest: /opt/sysmon/sysmonLogView
+    mode: '0755'
+
 - name: Ensure reporting script exists
   ansible.builtin.template:
     src: "{{ sysmon_reporting_template }}.j2"
