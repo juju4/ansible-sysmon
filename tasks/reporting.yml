@@ -5,6 +5,12 @@
     name: "{{ sysmon_report_pkgs }}"
     state: present
 
+- name: Ensure /usr/local/scripts exists
+  ansible.builtin.file:
+    dest: /usr/local/scripts
+    state: directory
+    mode: '0755'
+
 - name: Ensure reporting script exists
   ansible.builtin.template:
     src: "{{ sysmon_reporting_template }}.j2"
