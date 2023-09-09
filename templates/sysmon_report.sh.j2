@@ -1,0 +1,52 @@
+#!/bin/sh
+
+export PATH=/usr/bin:/bin
+umask 077
+
+# inline stdout redirection for sh
+# https://stackoverflow.com/questions/3173131/redirect-copy-of-stdout-to-log-file-from-within-bash-script-itself
+check_tee_output()
+{
+    # copy (append) stdout and stderr to log file if TEE is unset or true
+    if [ -z "${TEE}" ] || [ "${TEE}" = true ]; then
+	TEE=false $0 2>&1 | tee {{ sysmon_reporting_dest }}/sysmon-report-"$(date +%Y%m%d)" >/dev/null
+        exit $?
+    fi
+}
+
+check_tee_output
+
+date=$(date +%Y%m%d)
+journalctl_args="--since '1 day ago' -l --no-pager"
+f=/var/log/sysmon/sysmon.log
+echo
+echo
+echo "      SYSMON DAILY REPORT ${date} for ${f}"
+echo
+echo
+
+# Ubuntu 22.04
+
+echo "** Event types"
+journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[S]YSMONEVENT_' | sort | uniq -c | sort -nr
+echo
+echo
+
+echo "** RuleName"
+journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[R]uleName:' | sort | uniq -c | sort -nr
+echo "** Process"
+journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[I]mage:' | sort | uniq -c | sort -nr
+echo "** User"
+journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[U]ser:' | sort | uniq -c | sort -nr
+echo "** CurrentDirectory"
+journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[C]urrentDirectory:' | sort | uniq -c | sort -nr
+echo "** Company"
+journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[C]ompany:' | sort | uniq -c | sort -nr
+
+# else
+# head -1 /var/log/sysmon/sysmon.log | sed 's/^.* sysmon: //' | xmllint --format -
+# head -1 /var/log/sysmon/sysmon.log | sed 's/^.* sysmon: //' | xmllint --xpath "concat(/Event/EventData/Data[@Name='CommandLine']/text(), '|', /Event/EventData/Data[@Name='ParentCommandLine']/text())" -
+# cat /var/log/sysmon/sysmon.log | /opt/sysmon/sysmonLogView -r 1
+# cat "${f}" | /opt/sysmon/sysmonLogView |grep -E '[S]YSMONEVENT_' | sort | uniq -c | sort -nr
+
+find {{ sysmon_reporting_dest }} -name 'sysmon-report-*' -mtime +{{ sysmon_logrotate_days|int }} -exec rm {} \; 2>/dev/null

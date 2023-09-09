@@ -18,4 +18,8 @@ sysmon_cgroups_cpuquota: '20%'
 sysmon_cgroups_memorylimit: '1G'
 sysmon_cgroups_cpushares: '1024'
 
+sysmon_reporting: true
+sysmon_reporting_template: sysmon_report.sh
+sysmon_reporting_dest: /var/tmp
+
 is_container: false

@@ -5,7 +5,17 @@
     name: "{{ sysmon_report_pkgs }}"
     state: present
 
-# head -1 /var/log/sysmon/sysmon.log | sed 's/^.* sysmon: //' | xmllint --format -
-# head -1 /var/log/sysmon/sysmon.log | sed 's/^.* sysmon: //' | xmllint --xpath "concat(/Event/EventData/Data[@Name='CommandLine']/text(), '|', /Event/EventData/Data[@Name='ParentCommandLine']/text())" -
+- name: Ensure reporting script exists
+  ansible.builtin.template:
+    src: "{{ sysmon_reporting_template }}.j2"
+    dest: "/usr/local/scripts/{{ sysmon_reporting_template | basename }}"
+    mode: '0755'
 
-# cat /var/log/sysmon/sysmon.log | /opt/sysmon/sysmonLogView -r 1
+- name: Creates a daily scheduled task for reporting
+  ansible.builtin.cron:
+    name: sysmon_reporting
+    minute: "40"
+    hour: "23"
+    user: "nobody"
+    job: "/usr/local/scripts/{{ sysmon_reporting_template | basename }}"
+    cron_file: ansible_sysmon_reporting

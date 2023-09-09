@@ -105,3 +105,9 @@ jobs:
           find /etc/systemd/system/sysmon.service.d/ -type f -exec cat {} \;
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - reporting
+        run: |
+          set -x
+          /usr/local/scripts/sysmon_report.sh
+        if: ${{ always() }}
+        continue-on-error: true
