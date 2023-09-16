@@ -20,7 +20,7 @@
   ansible.builtin.file:
     path: /opt/sysmon
     state: directory
-    mode: '0700'
+    mode: '0711'
 
 - name: Install sysmon service
   ansible.builtin.command: sysmon -accepteula -i
