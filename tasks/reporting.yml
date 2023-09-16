@@ -20,6 +20,8 @@
   ansible.builtin.file:
     dest: /opt/sysmon/sysmonLogView
     mode: '0755'
+  when:
+    - not is_container|bool
 
 - name: Ensure reporting script exists
   ansible.builtin.template:
