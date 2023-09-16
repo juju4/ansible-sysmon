@@ -21,4 +21,4 @@ sysmon_build_pkgs:
 syslog_user: root
 
 sysmon_report_pkgs:
-  - crontabs
+  - cronie
