@@ -29,7 +29,7 @@ echo
 # Ubuntu 22.04
 
 echo "** Sample"
-journalctl -xeu sysmon ${journalctl_args} | tail -10
+journalctl -xeu sysmon ${journalctl_args} | tail -3
 
 echo "** Event types"
 journalctl -xeu sysmon ${journalctl_args} | /opt/sysmon/sysmonLogView |grep -E '[S]YSMONEVENT_' | sort | uniq -c | sort -nr
