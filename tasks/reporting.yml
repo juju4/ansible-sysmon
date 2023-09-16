@@ -32,6 +32,6 @@
     name: sysmon_reporting
     minute: "40"
     hour: "23"
-    user: "nobody"
+    user: "syslog"
     job: "/usr/local/scripts/{{ sysmon_reporting_template | basename }}"
     cron_file: ansible_sysmon_reporting
