@@ -25,5 +25,6 @@ sysmon_build_pkgs:
   - sysinternalsebpf
   - dotnet-sdk-6.0
   - libc6-dev-i386
+  - libssl-dev
 
 syslog_user: syslog

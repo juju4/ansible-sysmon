@@ -1,3 +1,27 @@
 ---
 
 sysmon_libgtest_path: /usr/src/googletest/build/googlemock/gtest/libgtest.a
+
+sysmon_build_pkgs:
+  - build-essential
+  - gcc
+  - g++
+  - make
+  - cmake
+  - libelf-dev
+  - llvm
+  - clang
+  - libxml2
+  - libxml2-dev
+  - libzstd1
+  - git
+  - libgtest-dev
+  - apt-transport-https
+  - dirmngr
+  - googletest
+  - google-mock
+  - libjson-glib-dev
+  - sysinternalsebpf
+  - dotnet-sdk-6.0
+  - libc6-dev-i386
+  - libssl1.0-dev
