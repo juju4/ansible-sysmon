@@ -25,7 +25,8 @@
 - name: Install sysmon service
   ansible.builtin.command: sysmon -accepteula -i
   args:
-    creates: /etc/systemd/system/sysmon.service
+    # creates: /etc/systemd/system/sysmon.service
+    creates: /opt/sysmon/sysmon
   notify:
     - Reload systemd
   when:
