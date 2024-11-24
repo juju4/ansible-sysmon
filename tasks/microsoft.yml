@@ -71,7 +71,7 @@
           Pin: origin "packages.microsoft.com"
           Pin-Priority: 1001
         dest: /etc/apt/preferences.d/99microsoft-dotnet.pref
-        mode: 0644
+        mode: '0644'
       when: sysmon_build
 
     - name: Flush handlers
