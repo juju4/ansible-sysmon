@@ -84,7 +84,7 @@ SystemCallErrorNumber=EPERM
 {% endif %}
 
 {% if sysmon_cgroups_restriction_enable|bool %}
-CPUShares={{ sysmon_cgroups_cpushares | default('1024') }}
+CPUWeight={{ sysmon_cgroups_cpushares | default('1024') }}
 CPUQuota={{ sysmon_cgroups_cpuquota | default('10%') }}
-MemoryLimit={{ sysmon_cgroups_memorylimit | default('1G') }}
+MemoryMax={{ sysmon_cgroups_memorylimit | default('1G') }}
 {% endif %}
