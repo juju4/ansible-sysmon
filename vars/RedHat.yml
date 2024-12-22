@@ -22,3 +22,5 @@ syslog_user: root
 
 sysmon_report_pkgs:
   - cronie
+
+microsoft_dotnet: dotnet-runtime-8.0

@@ -77,21 +77,29 @@
     - name: Flush handlers
       ansible.builtin.meta: flush_handlers
 
-- name: RedHat | adding Microsoft packages signing key
-  ansible.builtin.rpm_key:
-    key: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
+- name: RedHat
   when: ansible_os_family == 'RedHat'
-  register: dl_result
-  until: dl_result is success
+  block:
+    - name: RedHat | adding Microsoft packages signing key
+      ansible.builtin.rpm_key:
+        key: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+      register: dl_result
+      until: dl_result is success
 
-- name: RedHat | adding Microsoft prod packages repository
-  ansible.builtin.package:
-    name: "https://packages.microsoft.com/config/rhel/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
-    state: present
-  when: ansible_os_family == 'RedHat'
+    - name: RedHat | adding Microsoft prod packages repository
+      ansible.builtin.package:
+        name: "https://packages.microsoft.com/config/rhel/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
+        state: present
+      when: ansible_distribution == 'RedHat'
+
+    - name: Fedora | adding Microsoft prod packages repository
+      ansible.builtin.package:
+        name: "https://packages.microsoft.com/config/fedora/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
+        state: present
+      when: ansible_distribution == 'Fedora'
 
 - name: Ensure Microsoft packages are present
   ansible.builtin.package:
-    name: dotnet-runtime-6.0
+    name: "{{ microsoft_dotnet }}"
     state: present

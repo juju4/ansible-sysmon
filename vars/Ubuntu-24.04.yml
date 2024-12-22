@@ -1,3 +1,5 @@
 ---
 
 sysmon_libgtest_path: /usr/src/googletest/build/lib/libgtest.a
+
+microsoft_dotnet: dotnet-runtime-8.0

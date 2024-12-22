@@ -30,3 +30,5 @@ syslog_user: root
 sysmon_report_pkgs:
   - libxml2-utils
   - cron
+
+microsoft_dotnet: dotnet-runtime-8.0
