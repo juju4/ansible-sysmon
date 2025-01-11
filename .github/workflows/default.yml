@@ -32,7 +32,7 @@ jobs:
           - molecule_distro: 'debian:12'
             experimental: false
           - molecule_distro: 'fedora:41'
-            experimental: false
+            experimental: true
     env:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       MOLECULE_NO_LOG: "false"
