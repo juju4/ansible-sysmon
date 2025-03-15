@@ -8,13 +8,16 @@
 - name: Ensure sysmon package is installed - local build
   ansible.builtin.apt:
     deb: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}_amd64.deb"
-  when: sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int <= 18
+  when:
+    - sysmon_build | bool
 
 - name: Ensure sysmon package is installed - microsoft repo
   ansible.builtin.package:
     name: sysmonforlinux
     state: present
-  when: not (sysmon_build and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int <= 18)
+  when:
+    - not sysmon_build | bool
+    - ansible_distribution == 'Ubuntu'
 
 - name: Ensure /opt/sysmon exists
   ansible.builtin.file:
