@@ -17,7 +17,7 @@
     state: present
   when:
     - not sysmon_build | bool
-    - ansible_distribution == 'Ubuntu'
+    - ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
 
 - name: Ensure /opt/sysmon exists
   ansible.builtin.file:
