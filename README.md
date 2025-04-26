@@ -1,4 +1,4 @@
-[![Actions Status - Master](https://github.com/juju4/ansible-sysmon/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-sysmon/actions?query=branch%3Amaster)
+[![Actions Status - Main](https://github.com/juju4/ansible-sysmon/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-sysmon/actions?query=branch%3Amain)
 [![Actions Status - Devel](https://github.com/juju4/ansible-sysmon/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-sysmon/actions?query=branch%3Adevel)
 
 # sysmon ansible role
@@ -83,6 +83,7 @@ Sep  1 18:16:47 HOST sysmon[58907]: Telemetry failed to start: perf ring buffer 
 ```
 Restarting daemon seems to solve issue sometimes.
 
+* Fedora-41 install: "nothing provides libsysinternalsEBPF.so()(64bit) needed by sysmonforlinux-1.3.5-0.el8.x86_64 from packages-microsoft-com-prod"
 
 ## License
 
