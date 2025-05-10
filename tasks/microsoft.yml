@@ -8,61 +8,25 @@
 - name: Debian
   when: ansible_os_family == 'Debian'
   block:
-    - name: Debian | adding Microsoft packages signing key
-      ansible.builtin.apt_key:
-        url: https://packages.microsoft.com/keys/microsoft.asc
-        state: present
-      # https://github.com/ansible/ansible/issues/31691
-      environment: "{{ sysmon_env_proxy | default(omit) }}"
+    - name: Debian | Set fact
+      ansible.builtin.set_fact:
+        pkg_url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_major_version }}/packages-microsoft-prod.deb"
+    - name: Ubuntu | Set fact
+      ansible.builtin.set_fact:
+        pkg_url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
       when:
-        - ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int <= 18
+        - ansible_distribution == "Ubuntu"
 
-    - name: Setup Microsoft APT key
+    - name: Debian | Get packages-microsoft-prod.deb
       ansible.builtin.get_url:
-        url: https://packages.microsoft.com/keys/microsoft.asc
-        dest: /etc/apt/trusted.gpg.d/microsoft.asc
-        mode: '0644'
-      register: dl_result
-      until: dl_result is success
-      when:
-        - proxy_url is not defined or not proxy_url | string
-        - ((ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int > 18) or
-           (ansible_distribution == "Debian" and ansible_distribution_major_version | int > 10)
-          )
+        url: "{{ pkg_url }}"
+        dest: "/tmp/{{ pkg_url | basename }}"
+        mode: '0600'
 
-    - name: Proxy
-      when:
-        - proxy_url is defined and proxy_url | string
-        - ((ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int > 18) or
-           (ansible_distribution == "Debian" and ansible_distribution_major_version | int > 10)
-          )
-      block:
-        # workaround for apt_key not supporting proxy (ansible#31691)
-        - name: Download Microsoft Apt signing key  # noqa command-instead-of-module
-          ansible.builtin.command:
-            cmd: curl -sL -o /etc/apt/trusted.gpg.d/microsoft.asc https://packages.microsoft.com/keys/microsoft.asc
-          args:
-            creates: /etc/apt/trusted.gpg.d/microsoft.asc
-          environment:
-            http_proxy: "{{ proxy_url | default(omit) }}"
-
-    - name: Debian | adding Microsoft prod packages repository
-      ansible.builtin.apt_repository:
-        repo: "deb [arch={{ sysmon_deb_arch }}] http://packages.microsoft.com/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version }}/prod {{ ansible_distribution_release | lower }} main"
-        filename: microsoft.list
+    - name: Debian | Install Microsoft prod packages
+      ansible.builtin.apt:
+        deb: "/tmp/{{ pkg_url | basename }}"
         state: present
-      notify:
-        - Refresh apt cache
-      when: ansible_distribution == 'Debian'
-
-    - name: Ubuntu | adding Microsoft prod packages repository
-      ansible.builtin.apt_repository:
-        repo: "deb [arch={{ sysmon_deb_arch }}] http://packages.microsoft.com/{{ ansible_distribution | lower }}/{{ ansible_distribution_version }}/prod {{ ansible_distribution_release | lower }} main"
-        filename: microsoft.list
-        state: present
-      notify:
-        - Refresh apt cache
-      when: ansible_distribution == 'Ubuntu'
 
     - name: Debian | adding apt preferences for Microsoft prod packages
       ansible.builtin.copy:
