@@ -94,9 +94,13 @@ jobs:
         continue-on-error: true
       - name: After script - files
         run: |
+          set -x
           sudo ls -la /opt/sysmon/
           sudo getfacl /opt/sysmon/sysmon
           sudo getfacl /opt/sysmon/sysmonLogView
+          cat /etc/apt/sources.list.d/microsoft-prod.list
+          ls -l /usr/share/keyrings/microsoft-prod.gpg
+          sha256sum /usr/share/keyrings/microsoft-prod.gpg
         if: ${{ always() }}
         continue-on-error: true
       - name: After script - sysmon
