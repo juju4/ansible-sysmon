@@ -27,6 +27,8 @@
       ansible.builtin.apt:
         deb: "/tmp/{{ pkg_url | basename }}"
         state: present
+      notify:
+        - Refresh apt cache
 
     - name: Debian | adding apt preferences for Microsoft prod packages
       ansible.builtin.copy:
