@@ -27,6 +27,9 @@ jobs:
           - distribution: ubuntu
             version: '22.04'
             experimental: true
+          - distribution: ubuntu
+            version: '24.04-arm'
+            experimental: true
     env:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       ANSIBLE_EXTRA_VARS: ""

@@ -7,7 +7,7 @@
 
 - name: Ensure sysmon package is installed - local build
   ansible.builtin.apt:
-    deb: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}_amd64.deb"
+    deb: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}_{{ sysmon_deb_arch }}.deb"
   when:
     - sysmon_build | bool
 

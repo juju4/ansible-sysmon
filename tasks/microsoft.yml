@@ -48,7 +48,7 @@
 
     - name: Debian | adding Microsoft prod packages repository
       ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64] http://packages.microsoft.com/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version }}/prod {{ ansible_distribution_release | lower }} main"
+        repo: "deb [arch={{ sysmon_deb_arch }}] http://packages.microsoft.com/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version }}/prod {{ ansible_distribution_release | lower }} main"
         filename: microsoft.list
         state: present
       notify:
@@ -57,7 +57,7 @@
 
     - name: Ubuntu | adding Microsoft prod packages repository
       ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64] http://packages.microsoft.com/{{ ansible_distribution | lower }}/{{ ansible_distribution_version }}/prod {{ ansible_distribution_release | lower }} main"
+        repo: "deb [arch={{ sysmon_deb_arch }}] http://packages.microsoft.com/{{ ansible_distribution | lower }}/{{ ansible_distribution_version }}/prod {{ ansible_distribution_release | lower }} main"
         filename: microsoft.list
         state: present
       notify:

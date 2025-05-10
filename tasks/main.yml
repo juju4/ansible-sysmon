@@ -20,6 +20,16 @@
       )
     )
 
+- name: Set fact for arch x86_64
+  ansible.builtin.set_fact:
+    sysmon_deb_arch: amd64
+  when: ansible_architecture == 'x86_64'
+- name: Set fact for arch aarch64
+  ansible.builtin.set_fact:
+    sysmon_deb_arch: arm64
+  when: ansible_architecture == 'aarch64'
+
+
 - name: Import microsoft
   ansible.builtin.import_tasks: microsoft.yml
 - name: Import sysmon-build

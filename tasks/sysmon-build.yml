@@ -71,6 +71,6 @@
     - { c: whoami, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
     - { c: env, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
     - { c: make, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/sysmon" }
-    - { c: make packages, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}_amd64.deb" }
+    - { c: make packages, chdir: "{{ sysmon_build_dir }}/build", t: "{{ sysmon_build_dir }}/build/deb/sysmonforlinux_{{ sysmon_build_version }}_{{ sysmon_deb_arch }}.deb" }
   environment:
     VERSION: "{{ sysmon_build_version }}"
