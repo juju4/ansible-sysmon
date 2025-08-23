@@ -10,7 +10,7 @@
   block:
     - name: Debian | Set fact
       ansible.builtin.set_fact:
-        pkg_url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_major_version }}/packages-microsoft-prod.deb"
+        pkg_url: "https://packages.microsoft.com/config/debian/{{ ansible_distribution_major_version }}/packages-microsoft-prod.deb"
     - name: Ubuntu | Set fact
       ansible.builtin.set_fact:
         pkg_url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
