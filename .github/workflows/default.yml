@@ -45,6 +45,12 @@ jobs:
           - molecule_distro: 'fedora:41'
             experimental: true
             suite: default
+          - molecule_distro: 'almalinux:10-kitten'
+            experimental: true
+            suite: default-build
+          - molecule_distro: 'ubuntu:24.04'
+            experimental: true
+            suite: default-build
     env:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       MOLECULE_NO_LOG: "false"
