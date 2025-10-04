@@ -29,6 +29,9 @@
     sysmon_deb_arch: arm64
   when: ansible_architecture == 'aarch64'
 
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
 
 - name: Import microsoft
   ansible.builtin.import_tasks: microsoft.yml
@@ -44,6 +47,6 @@
   ansible.builtin.import_tasks: logrotate.yml
 - name: Import systemd
   ansible.builtin.import_tasks: systemd.yml
-  when: sysmon_systemd_restriction_enable
+  when: sysmon_systemd_restriction_enable | bool
 - name: Import reporting
   ansible.builtin.import_tasks: reporting.yml

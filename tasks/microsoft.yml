@@ -29,6 +29,8 @@
         state: present
       notify:
         - Refresh apt cache
+      when:
+        - ansible_facts.packages['packages-microsoft-prod'] is not defined
 
     - name: Debian | adding apt preferences for Microsoft prod packages
       ansible.builtin.copy:
