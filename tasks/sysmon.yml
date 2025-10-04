@@ -44,6 +44,8 @@
     validate: 'xmllint --noout %s'
     backup: "{{ sysmon_backup | default('yes') }}"
   notify:
+    # sysmon manages its systemd unit itself and can update it on its own
+    - Reload systemd
     - Restart sysmon
 
 - name: Ensure sysmon service is setup
