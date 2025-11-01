@@ -22,6 +22,7 @@
         url: "{{ pkg_url }}"
         dest: "/tmp/{{ pkg_url | basename }}"
         mode: '0600'
+      environment: "{{ proxy_env | default(omit) }}"
 
     - name: Debian | Install Microsoft prod packages
       ansible.builtin.apt:
