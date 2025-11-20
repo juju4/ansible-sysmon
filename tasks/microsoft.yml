@@ -46,6 +46,12 @@
     - name: Flush handlers
       ansible.builtin.meta: flush_handlers
 
+    - name: Debian | Check apt sources.d
+      ansible.builtin.command:
+        cmd: ls /etc/apt/sources.list.d
+      changed_when: false
+      failed_when: false
+
 - name: RedHat
   when: ansible_os_family == 'RedHat'
   block:
@@ -67,6 +73,12 @@
         name: "https://packages.microsoft.com/config/fedora/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
         state: present
       when: ansible_distribution == 'Fedora'
+
+    - name: RedHat | Check /etc/yum.repos.d
+      ansible.builtin.command:
+        cmd: ls /etc/yum.repos.d
+      changed_when: false
+      failed_when: false
 
 - name: Ensure Microsoft packages are present
   ansible.builtin.package:
