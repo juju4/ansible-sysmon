@@ -1,12 +1,10 @@
 ---
-name: default-bare
+name: default-bare-monthly
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
-  schedule:  # run weekly, every monday 03:00
-    - cron: '0 3 * * 1'
+  schedule:  # run on the 12th of the month
+    - cron: '30 1 12 * *'
   merge_group:
 
 concurrency:
@@ -23,13 +21,21 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         include:
           - distribution: ubuntu
             version: '24.04'
             suite: default
             experimental: false
+          - distribution: ubuntu
+            version: '22.04'
+            suite: default
+            experimental: false
+          - distribution: ubuntu
+            version: '24.04-arm'
+            experimental: true
+            suite: default
     env:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       ANSIBLE_EXTRA_VARS: ""
