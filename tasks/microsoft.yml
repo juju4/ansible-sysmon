@@ -52,6 +52,12 @@
       changed_when: false
       failed_when: false
 
+    - name: Debian | Check sysmon package
+      ansible.builtin.command:
+        cmd: apt-cache search sysmon
+      changed_when: false
+      failed_when: false
+
 - name: RedHat
   when: ansible_os_family == 'RedHat'
   block:
@@ -66,7 +72,9 @@
       ansible.builtin.package:
         name: "https://packages.microsoft.com/config/rhel/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
         state: present
-      when: ansible_distribution == 'RedHat'
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution != 'Fedora'
 
     - name: Fedora | adding Microsoft prod packages repository
       ansible.builtin.package:
@@ -77,6 +85,12 @@
     - name: RedHat | Check /etc/yum.repos.d
       ansible.builtin.command:
         cmd: ls /etc/yum.repos.d
+      changed_when: false
+      failed_when: false
+
+    - name: RedHat | Check sysmon package
+      ansible.builtin.command:
+        cmd: dnf search sysmon
       changed_when: false
       failed_when: false
 
