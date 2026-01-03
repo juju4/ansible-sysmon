@@ -6,16 +6,16 @@
     state: present
 
 - name: Debian
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian'
   block:
     - name: Debian | Set fact
       ansible.builtin.set_fact:
-        pkg_url: "https://packages.microsoft.com/config/debian/{{ ansible_distribution_major_version }}/packages-microsoft-prod.deb"
+        pkg_url: "https://packages.microsoft.com/config/debian/{{ ansible_facts['distribution_major_version'] }}/packages-microsoft-prod.deb"
     - name: Ubuntu | Set fact
       ansible.builtin.set_fact:
-        pkg_url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
+        pkg_url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_facts['distribution_version'] }}/packages-microsoft-prod.deb"
       when:
-        - ansible_distribution == "Ubuntu"
+        - ansible_facts['distribution'] == "Ubuntu"
 
     - name: Debian | Get packages-microsoft-prod.deb
       ansible.builtin.get_url:
@@ -59,7 +59,7 @@
       failed_when: false
 
 - name: RedHat
-  when: ansible_os_family == 'RedHat'
+  when: ansible_facts['os_family'] == 'RedHat'
   block:
     - name: RedHat | adding Microsoft packages signing key
       ansible.builtin.rpm_key:
@@ -70,17 +70,17 @@
 
     - name: RedHat | adding Microsoft prod packages repository
       ansible.builtin.package:
-        name: "https://packages.microsoft.com/config/rhel/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
+        name: "https://packages.microsoft.com/config/rhel/{{ ansible_facts['distribution_major_version'] }}/packages-microsoft-prod.rpm"
         state: present
       when:
-        - ansible_os_family == 'RedHat'
-        - ansible_distribution != 'Fedora'
+        - ansible_facts['os_family'] == 'RedHat'
+        - ansible_facts['distribution'] != 'Fedora'
 
     - name: Fedora | adding Microsoft prod packages repository
       ansible.builtin.package:
-        name: "https://packages.microsoft.com/config/fedora/{{ ansible_distribution_major_version }}/packages-microsoft-prod.rpm"
+        name: "https://packages.microsoft.com/config/fedora/{{ ansible_facts['distribution_major_version'] }}/packages-microsoft-prod.rpm"
         state: present
-      when: ansible_distribution == 'Fedora'
+      when: ansible_facts['distribution'] == 'Fedora'
 
     - name: RedHat | Check /etc/yum.repos.d
       ansible.builtin.command:

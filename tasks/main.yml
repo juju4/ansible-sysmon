@@ -1,33 +1,33 @@
 ---
 
 - name: Include os family-specific variables
-  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_facts['os_family'] }}.yml"
 - name: Include distribution-specific variables
-  ansible.builtin.include_vars: "{{ ansible_distribution }}.yml"
-  when: ansible_distribution == 'Ubuntu'
+  ansible.builtin.include_vars: "{{ ansible_facts['distribution'] }}.yml"
+  when: ansible_facts['distribution'] == 'Ubuntu'
 - name: Include version-specific variables for Ubuntu.
-  ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-  when: ansible_distribution == 'Ubuntu'
+  ansible.builtin.include_vars: "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_version'] }}.yml"
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Set fact is_container
   ansible.builtin.set_fact:
     is_container: true
   when: >
-    (ansible_virtualization_type is defined and
-      (ansible_virtualization_type == "docker"
-       or ansible_virtualization_type == "containerd"
-       or ansible_virtualization_type == "container"
+    (ansible_facts['virtualization_type'] is defined and
+      (ansible_facts['virtualization_type'] == "docker"
+       or ansible_facts['virtualization_type'] == "containerd"
+       or ansible_facts['virtualization_type'] == "container"
       )
     )
 
 - name: Set fact for arch x86_64
   ansible.builtin.set_fact:
     sysmon_deb_arch: amd64
-  when: ansible_architecture == 'x86_64'
+  when: ansible_facts['architecture'] == 'x86_64'
 - name: Set fact for arch aarch64
   ansible.builtin.set_fact:
     sysmon_deb_arch: arm64
-  when: ansible_architecture == 'aarch64'
+  when: ansible_facts['architecture'] == 'aarch64'
 
 - name: Gather package facts
   ansible.builtin.package_facts:
@@ -37,7 +37,7 @@
   ansible.builtin.import_tasks: microsoft.yml
 - name: Import sysmon-build
   ansible.builtin.import_tasks: sysmon-build.yml
-  when: sysmon_build and ansible_distribution == 'Ubuntu'
+  when: sysmon_build and ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Import sysmon
   ansible.builtin.import_tasks: sysmon.yml

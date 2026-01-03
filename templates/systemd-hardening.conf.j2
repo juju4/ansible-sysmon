@@ -9,7 +9,7 @@ NoNewPrivileges=yes
 PrivateTmp=true
 ProtectHome=true
 ProtectSystem=true
-{% if ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 21 %}
+{% if ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version']|int >= 21 %}
 ProtectProc=noaccess
 {% endif %}
 
@@ -23,11 +23,11 @@ UMask=077
 
 # ReadWritePaths=
 #InaccessiblePaths=/proc
-{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+{% if (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']|int >= 7) or (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version']|int >= 18) %}
 ProtectKernelTunables=true
 ProtectKernelModules=yes
-{% if (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 20) or
-      (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 8 )
+{% if (ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version']|int >= 20) or
+      (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']|int > 8 )
 %}
 ProtectKernelLogs=yes
 ProtectHostname=yes
@@ -70,11 +70,11 @@ CapabilityBoundingSet=~CAP_SYS_TTY_CONFIG
 # CapabilityBoundingSet=~CAP_IPC_LOCK
 
 {% endif %}
-{% if not (ansible_virtualization_type is defined and
-          (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker")
+{% if not (ansible_facts['virtualization_type'] is defined and
+          (ansible_facts['virtualization_type'] == "lxc" or ansible_facts['virtualization_type'] == "docker")
         ) and
-      not (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int < 8) %}
-{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20) %}
+      not (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']|int < 8) %}
+{% if (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']|int >= 8) or (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version']|int >= 20) %}
 SystemCallFilter=@system-service @debug @privileged
 SystemCallFilter=~@mount @cpu-emulation @obsolete @resources @clock @swap @reboot @module
 SystemCallArchitectures=native
