@@ -34,13 +34,13 @@ jobs:
             experimental: true
             suite: default
           - molecule_distro: 'ubuntu:22.04'
-            experimental: false
+            experimental: true
             suite: default
           - molecule_distro: 'debian:trixie-slim'
             experimental: true
             suite: default
           - molecule_distro: 'debian:12'
-            experimental: false
+            experimental: true
             suite: default
           - molecule_distro: 'fedora:42'
             experimental: true
