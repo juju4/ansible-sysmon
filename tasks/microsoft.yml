@@ -52,6 +52,12 @@
       changed_when: false
       failed_when: false
 
+    - name: Debian | Check dotnet-runtime package
+      ansible.builtin.command:
+        cmd: apt-cache search dotnet-runtime
+      changed_when: false
+      failed_when: false
+
     - name: Debian | Check sysmon package
       ansible.builtin.command:
         cmd: apt-cache search sysmon
