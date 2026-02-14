@@ -85,6 +85,11 @@ Restarting daemon seems to solve issue sometimes.
 
 * Fedora-41 install: "nothing provides libsysinternalsEBPF.so()(64bit) needed by sysmonforlinux-1.3.5-0.el8.x86_64 from packages-microsoft-com-prod"
 
+## Resources
+
+* <https://github.com/olafhartong/sysmon-modular>
+* <https://mhaggis.github.io/sysmon-dfir/>
+
 ## License
 
 BSD 2-clause
