@@ -1,7 +1,7 @@
+# sysmon ansible role
+
 [![Actions Status - Main](https://github.com/juju4/ansible-sysmon/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-sysmon/actions?query=branch%3Amain)
 [![Actions Status - Devel](https://github.com/juju4/ansible-sysmon/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-sysmon/actions?query=branch%3Adevel)
-
-# sysmon ansible role
 
 Install and configure Sysmon for Linux
 
