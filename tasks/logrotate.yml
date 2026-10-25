@@ -13,4 +13,8 @@
     dest: /etc/logrotate.d/sysmon
     mode: '0644'
     backup: yes
-    validate: 'logrotate -dv %s'
+
+- name: Global logrotate configuration validation
+  ansible.builtin.command:
+    cmd: logrotate -dv /etc/logrotate.conf
+  changed_when: false
