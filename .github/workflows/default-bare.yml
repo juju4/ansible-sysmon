@@ -27,7 +27,7 @@ jobs:
       matrix:
         include:
           - distribution: ubuntu
-            version: '24.04'
+            version: '26.04'
             suite: default
             experimental: false
     env:
